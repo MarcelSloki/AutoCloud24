@@ -1,41 +1,43 @@
-// app/dashboard/layout.tsx
-import "../globals.css";
+import { ReactNode } from "react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    redirect("/login");
+  }
+
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen">
       {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-lg flex flex-col">
-        <div className="px-6 py-4 border-b">
-          <h2 className="text-xl font-bold text-blue-600">AutoCloud24</h2>
-          <p className="text-sm text-gray-500">Händler Dashboard</p>
-        </div>
-        <nav className="flex-1 px-4 py-6 space-y-4">
-          <Link href="/dashboard" className="block text-gray-700 hover:text-blue-600 font-medium">
+      <aside className="w-64 bg-gray-800 text-white flex flex-col p-6">
+        <h2 className="text-xl font-bold mb-6">AutoCloud24</h2>
+        <nav className="flex flex-col space-y-3">
+          <Link href="/dashboard" className="hover:text-blue-400">
             Übersicht
           </Link>
-          <Link href="/dashboard/vehicles" className="block text-gray-700 hover:text-blue-600 font-medium">
+          <Link href="/dashboard/vehicles" className="hover:text-blue-400">
             Fahrzeuge
           </Link>
-          <Link href="/dashboard/logs" className="block text-gray-700 hover:text-blue-600 font-medium">
-            Händler-Log
+          <Link href="/dashboard/logs" className="hover:text-blue-400">
+            Händler-Logs
           </Link>
-          <Link href="/dashboard/settings" className="block text-gray-700 hover:text-blue-600 font-medium">
+          <Link href="/dashboard/settings" className="hover:text-blue-400">
             Einstellungen
           </Link>
         </nav>
-        <div className="px-6 py-4 border-t text-sm text-gray-500">
-          © {new Date().getFullYear()} AutoCloud24
-        </div>
       </aside>
 
-      {/* Main content */}
-      <main className="flex-1 p-8 overflow-y-auto">{children}</main>
+      {/* Main */}
+      <main className="flex-1 p-8 bg-gray-50 overflow-y-auto">{children}</main>
     </div>
   );
 }
