@@ -1,28 +1,60 @@
+// app/dashboard/page.tsx
 "use client";
 
-import { useState } from "react";
-import SearchProfile, { SearchProfileData } from "../components/SearchProfile";
-import ResultsTable from "../components/ResultsTable";
-import { demoVehicles, Vehicle } from "../lib/demoData";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+
+const data = [
+  { month: "Jan", preis: 12000 },
+  { month: "Feb", preis: 13500 },
+  { month: "Mär", preis: 12800 },
+  { month: "Apr", preis: 14000 },
+  { month: "Mai", preis: 15000 },
+];
 
 export default function DashboardPage() {
-  const [profile, setProfile] = useState<SearchProfileData | null>(null);
-
-  const filteredVehicles: Vehicle[] = demoVehicles.filter((v) => {
-    if (!profile) return true;
-    if (profile.brands.length > 0 && !profile.brands.includes(v.brand)) return false;
-    if (profile.marginType === "absolute" && (v.marketValue - v.price) < profile.minMargin) return false;
-    if (profile.marginType === "percent" && ((v.marketValue - v.price) / v.price) * 100 < profile.minMargin) return false;
-    if (v.standzeitDays > profile.maxStandzeit) return false;
-    if (profile.region && v.region !== profile.region) return false;
-    return true;
-  });
-
   return (
-    <main className="max-w-6xl mx-auto px-6 py-10">
-      <h1 className="text-3xl font-bold mb-6">AutoCloud24 Dashboard (Demo)</h1>
-      <SearchProfile onUpdate={(data) => setProfile(data)} />
-      <ResultsTable vehicles={filteredVehicles} />
-    </main>
+    <div className="space-y-8">
+      <h1 className="text-2xl font-bold text-gray-800">Übersicht</h1>
+
+      {/* KPIs */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-white shadow rounded-xl p-6">
+          <p className="text-gray-500 text-sm">Aktive Fahrzeuge</p>
+          <p className="text-2xl font-bold">23</p>
+        </div>
+        <div className="bg-white shadow rounded-xl p-6">
+          <p className="text-gray-500 text-sm">Ø Verkaufspreis</p>
+          <p className="text-2xl font-bold">14.200 €</p>
+        </div>
+        <div className="bg-white shadow rounded-xl p-6">
+          <p className="text-gray-500 text-sm">Neue Händlerkontakte</p>
+          <p className="text-2xl font-bold">5</p>
+        </div>
+      </div>
+
+      {/* Chart */}
+      <div className="bg-white shadow rounded-xl p-6 h-80">
+        <h2 className="text-lg font-bold text-gray-700 mb-4">
+          Marktpreisentwicklung
+        </h2>
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            <YAxis />
+            <Tooltip />
+            <Line type="monotone" dataKey="preis" stroke="#2563eb" strokeWidth={3} />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
   );
 }
