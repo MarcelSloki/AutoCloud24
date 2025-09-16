@@ -1,10 +1,9 @@
-// app/layout.tsx
 import "./globals.css";
 import Link from "next/link";
 
 export const metadata = {
   title: "AutoCloud24",
-  description: "Deine Plattform für professionelle Fahrzeugbewertungen & Händler-Dashboard",
+  description: "Professionelle Fahrzeugverwaltung für Händler",
 };
 
 export default function RootLayout({
@@ -15,33 +14,30 @@ export default function RootLayout({
   return (
     <html lang="de">
       <body className="bg-gray-50 text-gray-900">
-        {/* HEADER */}
+        {/* Navigation */}
         <header className="bg-white shadow-md">
-          <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-blue-600">AutoCloud24</h1>
+          <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 className="text-xl font-bold text-blue-600">AutoCloud24</h1>
             <nav className="space-x-6">
-              <Link href="/" className="hover:text-blue-600 font-medium">
-                Startseite
+              <Link href="/" className="hover:text-blue-600">
+                Start
               </Link>
-              <Link href="/dashboard" className="hover:text-blue-600 font-medium">
+              <Link href="/dashboard" className="hover:text-blue-600">
                 Dashboard
               </Link>
-              <Link href="/login" className="hover:text-blue-600 font-medium">
+              <Link href="/login" className="hover:text-blue-600">
                 Login
               </Link>
             </nav>
           </div>
         </header>
 
-        {/* MAIN CONTENT */}
-        <main className="max-w-7xl mx-auto px-6 py-8">{children}</main>
+        {/* Inhalt */}
+        <main className="min-h-screen">{children}</main>
 
-        {/* FOOTER */}
-        <footer className="bg-gray-100 border-t mt-10">
-          <div className="max-w-7xl mx-auto px-6 py-4 text-sm text-gray-600 flex justify-between">
-            <p>© {new Date().getFullYear()} AutoCloud24</p>
-            <p>Impressum · Datenschutz</p>
-          </div>
+        {/* Footer */}
+        <footer className="bg-gray-100 text-center py-4 mt-8 text-sm text-gray-600">
+          © {new Date().getFullYear()} AutoCloud24 – Alle Rechte vorbehalten.
         </footer>
       </body>
     </html>
