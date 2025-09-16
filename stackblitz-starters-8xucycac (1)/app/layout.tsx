@@ -1,11 +1,10 @@
 // app/layout.tsx
 import "./globals.css";
-import type { Metadata } from "next";
 import Link from "next/link";
 
-export const metadata: Metadata = {
-  title: "AutoCloud24 Dashboard",
-  description: "KI-gestütztes Dashboard für Händler",
+export const metadata = {
+  title: "AutoCloud24",
+  description: "Deine Plattform für professionelle Fahrzeugbewertungen & Händler-Dashboard",
 };
 
 export default function RootLayout({
@@ -16,37 +15,34 @@ export default function RootLayout({
   return (
     <html lang="de">
       <body className="bg-gray-50 text-gray-900">
-        {/* Menüleiste */}
-        <header className="bg-blue-900 text-white shadow-md">
-          <nav className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-            <h1 className="text-xl font-bold">AutoCloud24</h1>
-            <ul className="flex space-x-6">
-              <li>
-                <Link href="/" className="hover:underline">
-                  Start
-                </Link>
-              </li>
-              <li>
-                <Link href="/dashboard" className="hover:underline">
-                  Dashboard
-                </Link>
-              </li>
-              <li>
-                <Link href="/profil" className="hover:underline">
-                  Profil
-                </Link>
-              </li>
-              <li>
-                <Link href="/login" className="hover:underline">
-                  Login
-                </Link>
-              </li>
-            </ul>
-          </nav>
+        {/* HEADER */}
+        <header className="bg-white shadow-md">
+          <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 className="text-2xl font-bold text-blue-600">AutoCloud24</h1>
+            <nav className="space-x-6">
+              <Link href="/" className="hover:text-blue-600 font-medium">
+                Startseite
+              </Link>
+              <Link href="/dashboard" className="hover:text-blue-600 font-medium">
+                Dashboard
+              </Link>
+              <Link href="/login" className="hover:text-blue-600 font-medium">
+                Login
+              </Link>
+            </nav>
+          </div>
         </header>
 
-        {/* Hauptinhalt */}
-        <main className="max-w-7xl mx-auto p-4">{children}</main>
+        {/* MAIN CONTENT */}
+        <main className="max-w-7xl mx-auto px-6 py-8">{children}</main>
+
+        {/* FOOTER */}
+        <footer className="bg-gray-100 border-t mt-10">
+          <div className="max-w-7xl mx-auto px-6 py-4 text-sm text-gray-600 flex justify-between">
+            <p>© {new Date().getFullYear()} AutoCloud24</p>
+            <p>Impressum · Datenschutz</p>
+          </div>
+        </footer>
       </body>
     </html>
   );
